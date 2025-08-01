@@ -1,0 +1,1212 @@
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --text-primary: #000000;
+            --text-secondary: #6c757d;
+            --border-color: #dee2e6;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --card-bg: #ffffff;
+            --input-bg: #ffffff;
+            --input-border: #ff6200;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2d2d2d;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --border-color: #404040;
+            --shadow-color: rgba(0, 0, 0, 0.3);
+            --card-bg: #2d2d2d;
+            --input-bg: #404040;
+            --input-border: #ff6200;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            margin: 0;
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            background-color: var(--bg-primary);
+            border-bottom: 1px solid var(--border-color);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 1.1em;
+            transition: color 0.3s ease;
+            margin-left: 15px;
+        }
+
+        .nav a:hover {
+            color: #ff6200;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 2px solid var(--text-primary);
+            color: var(--text-primary);
+            padding: 8px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--text-primary);
+            color: var(--bg-primary);
+        }
+
+        .theme-toggle i {
+            font-size: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 10px 20px;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .header .logo {
+                width: 200px;
+                max-width: 80%;
+            }
+
+            .header .nav {
+                display: flex;
+                gap: 15px;
+                align-items: center;
+            }
+
+            .header .nav a {
+                font-size: 1em;
+                margin-left: 0;
+            }
+
+            .theme-toggle {
+                padding: 6px;
+                font-size: 12px;
+                width: 35px;
+                height: 35px;
+            }
+
+            .theme-toggle i {
+                font-size: 14px;
+            }
+        }
+
+        .logo {
+            width: 30%;
+            min-width: 200px;
+            /* Ensure logo doesn't get too small */
+        }
+
+        /* .header .logo {
+            font-size: 1.8em;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .header .logo span {
+            font-family: 'Dancing Script', cursive;
+            color: #ff00ff;
+            font-weight: 400;
+        } */
+
+
+
+        .development-notice {
+            background: linear-gradient(45deg, #ff6b35, #f7931e);
+            color: white;
+            text-align: center;
+            padding: 12px 20px;
+            font-size: 14px;
+            font-weight: 500;
+            box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .development-notice {
+                padding: 10px 15px;
+                font-size: 12px;
+            }
+        }
+
+        .development-notice p {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .main-container {
+            text-align: center;
+            padding: 80px 20px;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), no-repeat center center/cover;
+        }
+
+        .main-container h1 {
+            font-size: 3em;
+            margin-bottom: 40px;
+            font-weight: 700;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+        }
+
+        .options .btn {
+            display: block;
+            width: 320px;
+            margin: 15px auto;
+            padding: 18px;
+            font-size: 1.3em;
+            background-color: #ff6200;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.7s;
+            box-shadow: 0 0 10px rgba(255, 98, 0, 0.5);
+        }
+
+        .options .btn:hover {
+            background-color: #e05600;
+            transform: translateY(-3px);
+            box-shadow: 0 0 20px rgba(255, 98, 0, 0.8);
+        }
+
+        .creator-container {
+            display: flex;
+            flex-direction: row;
+            padding: 30px;
+            gap: 30px;
+            background-color: var(--bg-primary);
+            transition: background-color 0.3s ease;
+            align-items: flex-start;
+            /* Align items to the top */
+        }
+
+        @media (max-width: 768px) {
+            .creator-container {
+                flex-direction: column;
+                padding: 20px 15px;
+                gap: 20px;
+            }
+        }
+
+        .controls {
+            background-color: var(--card-bg);
+            padding: 25px;
+            border-radius: 12px;
+            width: 400px;
+            box-shadow: 0 0 20px var(--shadow-color);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            overflow-y: auto;
+            max-height: calc(100vh - 120px);
+            /* Adjust max-height based on viewport */
+            flex-shrink: 0;
+            /* Prevent controls from shrinking */
+        }
+
+        /* <----------------3d texture style start--------------------> */
+        /* Add to your styles.css */
+        .sign-type-toggle {
+            display: flex;
+            margin-top: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+            border: 1px solid bisque;
+        }
+
+        .sign-type-toggle .btn {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            background: white;
+            color: black;
+            cursor: pointer;
+        }
+
+        .sign-type-toggle .btn.active {
+            background: #ff6200;
+            color: white;
+        }
+
+        .material-thumbnails {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .material-thumb {
+            border: 2px solid transparent;
+            border-radius: 5px;
+            overflow: hidden;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .material-thumb.active {
+            border-color: #ff6200;
+        }
+
+        .material-thumb img {
+            width: 100%;
+            height: 60px;
+            object-fit: cover;
+        }
+
+        .material-thumb span {
+            display: block;
+            padding: 5px;
+            font-size: 12px;
+        }
+
+        /* <-----------3d texture style end--------------------> */
+
+        @media (max-width: 768px) {
+            .controls {
+                width: 93%;
+                padding: 20px 15px;
+                order: 2;
+            }
+        }
+
+        .preview {
+            flex-grow: 1;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 75vh;
+            /* Set a relative height */
+            min-height: 450px;
+            /* Minimum height for the preview */
+            box-shadow: inset 0 0 20px var(--shadow-color);
+            position: relative;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .preview {
+                min-height: 300px;
+                padding: 15px;
+                order: 1;
+            }
+        }
+
+        .preview-canvas {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        @media (max-width: 768px) {
+            .preview-canvas {
+                min-height: 250px;
+            }
+        }
+
+        .control-group {
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .control-group {
+                margin-bottom: 15px;
+            }
+
+            .control-group label {
+                font-size: 14px;
+            }
+
+            .control-group input,
+            .control-group select {
+                padding: 10px;
+                font-size: 14px;
+            }
+        }
+
+        .control-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-primary);
+            transition: color 0.3s ease;
+        }
+
+        .control-group input,
+        .control-group select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 2px solid var(--input-border);
+            background-color: var(--input-bg);
+            color: var(--text-primary);
+            box-sizing: border-box;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .power-toggle {
+            position: relative;
+            display: flex;
+            background: #eee;
+            border-radius: 12px;
+            overflow: hidden;
+            width: 100%;
+            max-width: 100%;
+            height: 140px;
+            margin-top: 10px;
+        }
+
+        .power-toggle input {
+            display: none;
+        }
+
+        .power-toggle .option {
+            flex: 1;
+            padding: 10px 20px;
+            cursor: pointer;
+            text-align: center;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            transition: color 0.3s ease;
+        }
+
+        .power-toggle .option .title {
+            font-weight: bold;
+            font-size: large;
+            transition: color 0.3s ease;
+        }
+
+        .power-toggle .option span {
+            font-size: 0.9em;
+            color: black;
+            margin-top: 5px;
+            transition: color 0.3s ease;
+        }
+
+        .power-toggle .slider {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(45deg, #ff6200, #ff8c00);
+            border-radius: 12px;
+            z-index: 1;
+            transition: transform 0.3s ease;
+        }
+
+        /* Toggle animation */
+        #battery:checked~.slider {
+            transform: translateX(100%);
+        }
+
+        #wall:checked~.slider {
+            transform: translateX(0%);
+        }
+
+        /* Text color changes */
+        #wall:checked~.option[for="wall"] .title,
+        #wall:checked~.option[for="wall"] span {
+            color: white;
+        }
+
+        #battery:checked~.option[for="battery"] .title,
+        #battery:checked~.option[for="battery"] span {
+            color: white;
+        }
+
+        /* Ensure unselected option has black text */
+        #wall:checked~.option[for="battery"] .title,
+        #wall:checked~.option[for="battery"] span,
+        #battery:checked~.option[for="wall"] .title,
+        #battery:checked~.option[for="wall"] span {
+            color: black;
+        }
+
+        /* Font-specific styling for dropdown options */
+        .font-autoguard {
+            font-family: 'Autoguard', cursive;
+            font-size: clamp(16px, 4vw, 20px);
+            line-height: 1.2;
+        }
+
+        .font-barcelony {
+            font-family: 'Barcelony', cursive;
+            font-size: clamp(16px, 4vw, 20px);
+            line-height: 1.2;
+        }
+
+        .font-bayshore {
+            font-family: 'Bayshore', cursive;
+            font-size: clamp(16px, 4vw, 20px);
+            line-height: 1.2;
+        }
+
+        .font-beon {
+            font-family: 'Beon', cursive;
+            font-size: clamp(14px, 3vw, 16px);
+            line-height: 1.2;
+            font-weight: normal;
+        }
+
+        .font-better-together-demo {
+            font-family: 'Better Together Demo', cursive;
+            font-size: clamp(18px, 4vw, 22px);
+            line-height: 1.2;
+        }
+
+        .font-boho-baby {
+            font-family: 'Boho Baby', cursive;
+            font-size: clamp(16px, 4vw, 20px);
+            line-height: 1.2;
+        }
+
+        .font-conquera-fine {
+            font-family: 'Conquera Fine', cursive;
+            font-size: clamp(18px, 4vw, 22px);
+            line-height: 1.2;
+        }
+
+        .font-core-mellow {
+            font-family: 'Core Mellow', cursive;
+            font-size: clamp(16px, 4vw, 20px);
+            line-height: 1.2;
+        }
+
+        .font-gruenewald-va {
+            font-family: 'Gruenewald VA', cursive;
+            font-size: clamp(16px, 4vw, 20px);
+            line-height: 1.2;
+        }
+
+        .font-hamillton-demo {
+            font-family: 'Hamillton Demo', cursive;
+            font-size: clamp(16px, 4vw, 20px);
+            line-height: 1.2;
+        }
+
+        .font-handsome {
+            font-family: 'Handsome', cursive;
+            font-size: clamp(16px, 4vw, 20px);
+            line-height: 1.2;
+        }
+
+        .font-hesterica {
+            font-family: 'Hesterica', cursive;
+            font-size: clamp(16px, 4vw, 20px);
+            line-height: 1.2;
+        }
+
+        .font-kiona {
+            font-family: 'Kiona', cursive;
+            font-size: clamp(14px, 3vw, 16px);
+            line-height: 1.2;
+            font-weight: normal;
+        }
+
+        .font-kloegirl-new-york-itc-std {
+            font-family: 'Kloegirl New York ITC Std', cursive;
+            font-size: clamp(18px, 4vw, 22px);
+            line-height: 1.2;
+        }
+
+        .font-local-brewery-two {
+            font-family: 'Local Brewery Two', cursive;
+            font-size: clamp(16px, 4vw, 18px);
+            line-height: 1.2;
+        }
+
+        .font-love-conchetta {
+            font-family: 'Love Conchetta', cursive;
+            font-size: clamp(16px, 4vw, 20px);
+            line-height: 1.2;
+        }
+
+        .font-marquee-moon {
+            font-family: 'Marquee Moon', cursive;
+            font-size: clamp(14px, 3vw, 16px);
+            line-height: 1.2;
+            font-weight: normal;
+        }
+
+        .font-neon-glow-light {
+            font-family: 'Neon Glow Light', cursive;
+            font-size: clamp(16px, 4vw, 18px);
+            line-height: 1.2;
+        }
+
+        .font-neon-led-light {
+            font-family: 'Neon LED Light', cursive;
+            font-size: clamp(16px, 4vw, 18px);
+            line-height: 1.2;
+        }
+
+        .font-neon-sans {
+            font-family: 'Neon Sans', cursive;
+            font-size: clamp(16px, 4vw, 18px);
+            line-height: 1.2;
+        }
+
+        .font-nickainley-normal {
+            font-family: 'Nickainley Normal', cursive;
+            font-size: clamp(16px, 4vw, 20px);
+            line-height: 1.2;
+        }
+
+        .font-quinzey {
+            font-family: 'Quinzey', cursive;
+            font-size: clamp(16px, 4vw, 20px);
+            line-height: 1.2;
+        }
+
+        .font-roboto-lt {
+            font-family: 'Roboto Lt', sans-serif;
+            font-size: clamp(16px, 4vw, 18px);
+            line-height: 1.2;
+        }
+
+        .font-rocket-clouds-demo {
+            font-family: 'Rocket Clouds Demo', cursive;
+            font-size: clamp(18px, 4vw, 22px);
+            line-height: 1.2;
+        }
+
+        .font-socialist {
+            font-family: 'Socialist', cursive;
+            font-size: clamp(16px, 4vw, 20px);
+            line-height: 1.2;
+        }
+
+        .font-vegas-nova-light {
+            font-family: 'Vegas Nova Light', cursive;
+            font-size: clamp(16px, 4vw, 18px);
+            line-height: 1.2;
+        }
+
+        .font-velvet-script {
+            font-family: 'Velvet Script', cursive;
+            font-size: clamp(16px, 4vw, 20px);
+            line-height: 1.2;
+        }
+
+        .font-westey {
+            font-family: 'Westey', cursive;
+            font-size: clamp(16px, 4vw, 20px);
+            line-height: 1.2;
+        }
+
+        .color-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .color-options {
+                gap: 8px;
+            }
+
+            .color-box {
+                width: 30px;
+                height: 30px;
+            }
+        }
+
+        .color-box {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid wheat;
+            transition: all 0.7s;
+        }
+
+        .color-box.multi-color {
+            background: linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet);
+        }
+
+        .color-box.active {
+            border-color: #ff6200;
+            transform: scale(1.1);
+        }
+
+        .price-display {
+            margin-top: 20px;
+            padding: 15px;
+            background: linear-gradient(45deg, #ff6200, #ff8c00);
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: 700;
+            color: #fff;
+            box-shadow: 0 0 15px rgba(255, 98, 0, 0.6);
+        }
+
+        /* Custom Dropdown Styles */
+        .custom-select {
+            position: relative;
+            display: block;
+            width: 100%;
+            max-width: 100%;
+        }
+        
+        /* Font dropdown container constraints */
+        .select-items div * {
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .select-selected {
+            background-color: var(--input-bg);
+            color: var(--text-primary);
+            padding: 12px;
+            border: 2px solid var(--input-border);
+            border-radius: 8px;
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .select-selected:after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            right: 15px;
+            width: 0;
+            height: 0;
+            border: 6px solid transparent;
+            border-color: var(--text-primary) transparent transparent transparent;
+            transform: translateY(-50%);
+            transition: transform 0.3s ease;
+        }
+
+        .select-selected.select-arrow-active:after {
+            transform: translateY(-50%) rotate(180deg);
+        }
+
+        .select-items {
+            position: absolute;
+            background-color: var(--input-bg);
+            border: 2px solid var(--input-border);
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            z-index: 99;
+            width: 100%;
+            max-height: 400px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            box-shadow: 0 4px 12px var(--shadow-color);
+            scrollbar-width: thin;
+        }
+
+        .select-hide {
+            display: none;
+        }
+
+        .select-items div {
+            color: var(--text-primary);
+            padding: 12px 16px;
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.2s ease;
+            font-size: 16px;
+            min-height: 45px;
+            max-height: 60px;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            box-sizing: border-box;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .select-items div:hover {
+            background-color: var(--bg-secondary);
+        }
+
+        .same-as-selected {
+            background-color: var(--input-border) !important;
+            color: white !important;
+        }
+
+
+        @media (max-width: 768px) {
+            .price-display {
+                font-size: 1.3em;
+                padding: 12px;
+                margin-top: 15px;
+            }
+        }
+
+        .background-selector {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            background-color: var(--bg-secondary);
+            padding: 10px;
+            border-radius: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .background-selector {
+                bottom: 10px;
+                gap: 8px;
+                padding: 8px;
+            }
+
+            .bg-thumb {
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+        .bg-thumb {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            background-size: cover;
+            background-position: center;
+            transform: scale(0.9);
+            transition: all 0.7s;
+        }
+
+        .bg-thumb.active {
+            border-color: #ff6200;
+            transform: scale(1.1);
+            transition-behavior: smooth;
+        }
+
+
+        /* === Include all custom fonts === */
+        @font-face {
+            font-family: 'Autoguard';
+            src: url('./../fonts/Autoguard.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Barcelony';
+            src: url('./../fonts/Barcelony.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Bayshore';
+            src: url('./../fonts/Bayshore.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Beon';
+            src: url('./../fonts/Beon.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Better Together Demo';
+            src: url('./../fonts/Better_Together_Demo.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Boho Baby';
+            src: url('./../fonts/Boho_Baby.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Conquera Fine';
+            src: url('./../fonts/Conquera_Fine.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Core Mellow';
+            src: url('./../fonts/Core_Mellow.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Gruenewald VA';
+            src: url('./../fonts/Gruenewald_VA.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Hamillton Demo';
+            src: url('./../fonts/Hamillton_Demo.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Handsome';
+            src: url('./../fonts/Handsome.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Hesterica';
+            src: url('./../fonts/Hesterica.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Kiona';
+            src: url('./../fonts/Kiona.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Kloegirl New York ITC Std';
+            src: url('./../fonts/Kloegirl_New_York_ITC_Std.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Local Brewery Two';
+            src: url('./../fonts/Local_Brewery_Two.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Love Conchetta';
+            src: url('./../fonts/Love_Conchetta.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Marquee Moon';
+            src: url('./../fonts/Marquee_Moon.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Neon Glow Light';
+            src: url('./../fonts/NEON_GLOW-Light.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Neon LED Light';
+            src: url('./../fonts/NEON_LED_Light.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Neon Sans';
+            src: url('./../fonts/Neon_Sans.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Nickainley Normal';
+            src: url('./../fonts/Nickainley_Normal.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Quinzey';
+            src: url('./../fonts/Quinzey.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Roboto Lt';
+            src: url('./../fonts/Roboto_Lt.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Rocket Clouds Demo';
+            src: url('./../fonts/Rocket_Clouds_DEMO.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Socialist';
+            src: url('./../fonts/Socialist.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Vegas Nova Light';
+            src: url('./../fonts/Vegas_Nova_Light.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Velvet Script';
+            src: url('./../fonts/Velvet_Script.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Westey';
+            src: url('./../fonts/Westey.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        /* ==========================================================================
+   Responsive Media Queries
+   ========================================================================== */
+
+        /* For Extra Large Screens (Desktops, 1200px and up) */
+        @media (min-width: 1201px) {
+            .creator-container {
+                padding: 40px;
+            }
+        }
+
+        /* For Medium to Large Screens (Laptops, Tablets in Landscape) */
+        @media (max-width: 1200px) {
+            .creator-container {
+                flex-direction: column;
+                /* Stack layout for tablets and smaller devices */
+                padding: 20px;
+                gap: 20px;
+            }
+
+            .controls {
+                width: 100%;
+                /* Full width for controls */
+                order: 2;
+                /* Show controls below preview */
+                max-height: none;
+                /* Allow controls to expand */
+                overflow-y: visible;
+            }
+
+            .preview {
+                width: 100%;
+                order: 1;
+                /* Show preview on top */
+                height: auto;
+                /* Auto height */
+                min-height: 40vh;
+                /* Adjust min height for vertical layout */
+            }
+
+            .header {
+                padding: 15px 30px;
+            }
+        }
+
+        /* For Small to Medium Screens (Tablets in Portrait) */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px 20px;
+            }
+
+            .logo {
+                width: 40%;
+                min-width: 180px;
+            }
+
+            .nav a {
+                font-size: 1em;
+                margin-left: 10px;
+            }
+
+            .main-container h1 {
+                font-size: 2.5em;
+                /* Reduce heading size */
+            }
+
+            .creator-container {
+                padding: 15px;
+            }
+
+            .controls {
+                padding: 20px;
+            }
+
+            .preview {
+                padding: 20px;
+                min-height: 35vh;
+            }
+
+            .price-display {
+                font-size: 1.3em;
+                padding: 12px;
+            }
+
+            .background-selector {
+                padding: 8px;
+                gap: 8px;
+            }
+
+            .bg-thumb {
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+        /* For Extra Small Screens (Mobile Phones) */
+        @media (max-width: 576px) {
+            .header {
+                padding: 10px 15px;
+            }
+
+            .logo {
+                width: 50%;
+                min-width: 150px;
+            }
+
+            .nav {
+                gap: 10px;
+                width: 100%;
+                justify-content: space-around;
+            }
+
+            .nav a {
+                margin-left: 0;
+            }
+
+            .development-notice {
+                font-size: 12px;
+                padding: 10px;
+            }
+
+            .main-container h1 {
+                font-size: 2em;
+            }
+
+            .options .btn {
+                width: 100%;
+                max-width: 280px;
+                font-size: 1.1em;
+                padding: 15px;
+            }
+
+            .control-group label {
+                font-size: 14px;
+            }
+
+            .control-group input,
+            .control-group select,
+            .select-selected {
+                padding: 10px;
+                font-size: 14px;
+            }
+
+            .color-options {
+                gap: 8px;
+            }
+
+            .color-box {
+                width: 30px;
+                height: 30px;
+            }
+
+            .price-display {
+                font-size: 1.2em;
+            }
+
+            .power-toggle .option span {
+                font-size: 0.8em;
+            }
+        }

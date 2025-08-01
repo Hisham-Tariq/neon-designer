@@ -1,0 +1,631 @@
+// Theme management
+function toggleTheme() {
+    const body = document.body;
+    const themeToggle = document.querySelector('.theme-toggle');
+    const icon = themeToggle.querySelector('i');
+
+    if (body.getAttribute('data-theme') === 'dark') {
+        body.removeAttribute('data-theme');
+        icon.className = 'fas fa-moon';
+        document.querySelector('.logo').src = './assets/logo-dark.png';
+        localStorage.setItem('theme', 'light');
+    } else {
+        body.setAttribute('data-theme', 'dark');
+        icon.className = 'fas fa-sun';
+        document.querySelector('.logo').src = './assets/logo-light.png';
+        localStorage.setItem('theme', 'dark');
+    }
+}
+
+// Load saved theme on page load
+function loadTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        document.body.setAttribute('data-theme', 'dark');
+        const themeToggle = document.querySelector('.theme-toggle');
+        const icon = themeToggle.querySelector('i');
+        icon.className = 'fas fa-sun';
+    }
+}
+
+// Helper to close all dropdowns
+function closeAllDropdowns(current) {
+    document.querySelectorAll('.select-items').forEach(el => {
+        if (el.previousElementSibling !== current) {
+            el.classList.add('select-hide');
+        }
+    });
+    document.querySelectorAll('.select-selected').forEach(el => {
+        if (el !== current) {
+            el.classList.remove('select-arrow-active');
+        }
+    });
+}
+
+window.onload = function () {
+    loadTheme();
+    populateColors();
+    populateBackgrounds();
+    preloadFonts();
+    updatePreview();
+    initCustomSelect();
+    initMaterialSelection();
+    document.getElementById('neonBtn').addEventListener('click', () => toggleSignType('neon'));
+    document.getElementById('materialBtn').addEventListener('click', () => toggleSignType('material'));
+};
+
+// Preload all fonts to ensure they're available
+function preloadFonts() {
+    const fonts = [
+        'Autoguard', 'Barcelony', 'Bayshore', 'Beon', 'Better Together Demo',
+        'Boho Baby', 'Conquera Fine', 'Core Mellow', 'Gruenewald VA',
+        'Hamillton Demo', 'Handsome', 'Hesterica', 'Kiona',
+        'Kloegirl New York ITC Std', 'Local Brewery Two', 'Love Conchetta',
+        'Marquee Moon', 'NEON GLOW-Light', 'NEON LED Light', 'Neon Sans',
+        'Nickainley Normal', 'Quinzey', 'Roboto Lt', 'Rocket Clouds DEMO',
+        'Socialist', 'Vegas Nova Light', 'Velvet Script', 'Westey'
+    ];
+
+    fonts.forEach(font => {
+        document.fonts.load(`16px "${font}"`).then(() => {
+            console.log(`Font ${font} loaded successfully`);
+        }).catch(err => {
+            console.log(`Font ${font} failed to load:`, err);
+        });
+    });
+}
+
+let selectedColor = '#ff00ff';
+let multiColorInterval;
+const colors = ["#ff00ff", "#00e1ffff", "#ffe600ff", "#00ff00", "#ff0000", "#dee2e6", "#ff6200", "#a020f0", "#ff1493", "#32cd32"];
+const backgrounds = [
+    'assets/1.jpg',
+    'assets/2.jpg',
+    'assets/3.jpg',
+    'assets/4.jpg',
+    'assets/5.jpg'
+];
+let selectedBackground = backgrounds[1];
+let isNeonSign = true;
+let selectedMaterial = 'forex-10mm';
+const materialThickness = {
+    'forex-10mm': 10,
+    'forex-5mm': 5,
+    'forex-3mm':3,
+    'mdf-3mm': 3,
+    'mdf-5mm':5,
+    'mdf-9mm': 9,
+    'silver-mirror-2mm':2,
+    'gold-mirror-2mm':2,
+    'stainlesssteel-1mm':1,
+    'acrylic-3mm': 3,
+    'acrylic-black-3mm': 3,
+    'acrylic-8mm':8,
+    'acrylic-10mm': 10
+};
+
+function populateColors() {
+    const colorContainer = document.getElementById('colorOptions');
+    colorContainer.innerHTML = '';
+    colors.forEach((color, index) => {
+        const colorBox = document.createElement('div');
+        colorBox.className = 'color-box';
+        colorBox.style.backgroundColor = color;
+        colorBox.onclick = () => selectColor(colorBox, color);
+        if (color === selectedColor) {
+            colorBox.classList.add('active');
+        }
+        colorContainer.appendChild(colorBox);
+    });
+    const multiColorBox = document.createElement('div');
+    multiColorBox.className = 'color-box multi-color';
+    multiColorBox.onclick = () => selectColor(multiColorBox, 'multi');
+    colorContainer.appendChild(multiColorBox);
+}
+
+function populateBackgrounds() {
+    const backgroundContainer = document.getElementById('backgroundSelector');
+    backgroundContainer.innerHTML = '';
+    backgrounds.forEach((bg, index) => {
+        const bgThumb = document.createElement('div');
+        bgThumb.className = 'bg-thumb';
+        bgThumb.style.backgroundImage = `url(${bg})`;
+        bgThumb.onclick = () => selectBackground(bgThumb, bg);
+        if (bg === selectedBackground) {
+            bgThumb.classList.add('active');
+        }
+        backgroundContainer.appendChild(bgThumb);
+    });
+}
+
+function selectColor(element, color) {
+    document.querySelectorAll('.color-box').forEach(box => box.classList.remove('active'));
+    element.classList.add('active');
+    selectedColor = color;
+
+    if (multiColorInterval) {
+        clearInterval(multiColorInterval);
+        multiColorInterval = null;
+    }
+
+    if (color === 'multi') {
+        let colorIndex = 0;
+        multiColorInterval = setInterval(() => {
+            selectedColor = colors[colorIndex];
+            updatePreview();
+            colorIndex = (colorIndex + 1) % colors.length;
+        }, 1000);
+    } else {
+        updatePreview();
+    }
+}
+
+function selectBackground(element, bg) {
+    document.querySelectorAll('.bg-thumb').forEach(thumb => thumb.classList.remove('active'));
+    element.classList.add('active');
+    selectedBackground = bg;
+    updatePreview();
+}
+
+function toggleSignType(type) {
+    isNeonSign = (type === 'neon');
+    document.getElementById('neonBtn').classList.toggle('active', isNeonSign);
+    document.getElementById('materialBtn').classList.toggle('active', !isNeonSign);
+    document.getElementById('colorOptions').style.display = isNeonSign ? 'flex' : 'none';
+    document.getElementById('colorOptionsGroup').style.display = isNeonSign ? 'unset' : 'none';
+    document.getElementById('materialOptions').style.display = isNeonSign ? 'none' : 'block';
+    updatePreview();
+}
+
+function initMaterialSelection() {
+    document.querySelectorAll('.material-thumb').forEach(thumb => {
+        thumb.addEventListener('click', function () {
+            document.querySelectorAll('.material-thumb').forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+            selectedMaterial = this.dataset.material;
+            updatePreview();
+        });
+    });
+    document.querySelector('.material-thumb').classList.add('active');
+}
+
+function drawDimensionLine(ctx, x1, y1, x2, y2, text, fontSize) {
+    const isLightBackground = selectedBackground.includes('light-background');
+    const lineColor = isLightBackground ? 'rgba(0, 0, 0, 0.5)' : 'rgba(255, 255, 255, 0.5)';
+    const textColor = isLightBackground ? 'rgba(0, 0, 0, 0.8)' : 'rgba(255, 255, 255, 0.8)';
+
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.strokeStyle = lineColor;
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(x1, y1 - 5);
+    ctx.lineTo(x1, y1 + 5);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(x2, y2 - 5);
+    ctx.lineTo(x2, y2 + 5);
+    ctx.stroke();
+
+    ctx.fillStyle = textColor;
+    const dimensionFontSize = Math.max(8, Math.min(16, fontSize * 0.15));
+    ctx.font = `${dimensionFontSize}px Poppins`;
+    ctx.textAlign = 'center';
+    ctx.fillText(text, (x1 + x2) / 2, y1 - 10);
+}
+
+function drawDimensionLineVertical(ctx, x1, y1, x2, y2, text, fontSize) {
+    const isLightBackground = selectedBackground.includes('light-background');
+    const lineColor = isLightBackground ? 'rgba(0, 0, 0, 0.5)' : 'rgba(255, 255, 255, 0.5)';
+    const textColor = isLightBackground ? 'rgba(0, 0, 0, 0.8)' : 'rgba(255, 255, 255, 0.8)';
+
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.strokeStyle = lineColor;
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(x1 - 5, y1);
+    ctx.lineTo(x1 + 5, y1);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(x2 - 5, y2);
+    ctx.lineTo(x2 + 5, y2);
+    ctx.stroke();
+
+    ctx.save();
+    ctx.translate(x1 - 10, (y1 + y2) / 2);
+    ctx.rotate(-Math.PI / 2);
+    ctx.fillStyle = textColor;
+    const dimensionFontSize = Math.max(8, Math.min(16, fontSize * 0.15));
+    ctx.font = `${dimensionFontSize}px Poppins`;
+    ctx.textAlign = 'center';
+    ctx.fillText(text, 0, 0);
+    ctx.restore();
+}
+
+let selectedFont = 'Handsome';
+
+function initCustomSelect() {
+    const selectSelected = document.querySelector('.select-selected');
+    const selectItems      = document.querySelector('.select-items');
+    const options          = Array.from(selectItems.querySelectorAll('div'));
+
+    /* ---------- open / close list ---------- */
+    selectSelected.addEventListener('click', e => {
+        e.stopPropagation();
+        closeAllDropdowns(selectSelected);
+        selectItems.classList.toggle('select-hide');
+        selectSelected.classList.toggle('select-arrow-active');
+        if (!selectItems.classList.contains('select-hide')) {
+            selectItems.focus();
+        }
+    });
+
+    /* ---------- mouse selection ---------- */
+    options.forEach(option => {
+        option.addEventListener('click', () => {
+            const value     = option.getAttribute('data-value');
+            const className = option.className;
+
+            selectSelected.textContent       = value;
+            selectSelected.className         = 'select-selected ' + className;
+            selectedFont                     = value;
+
+            options.forEach(opt => opt.classList.remove('same-as-selected'));
+            option.classList.add('same-as-selected');
+
+            selectItems.classList.add('select-hide');
+            selectSelected.classList.remove('select-arrow-active');
+            updatePreview();
+        });
+    });
+
+    /* ---------- keyboard navigation ---------- */
+    selectSelected.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+            e.preventDefault();
+            selectSelected.click();
+        }
+    });
+
+    selectItems.addEventListener('keydown', e => {
+        const activeItem = selectItems.querySelector('.same-as-selected');
+        let index        = activeItem ? options.indexOf(activeItem) : 0;
+
+        if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            index = (index + 1) % options.length;
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            index = (index - 1 + options.length) % options.length;
+        } else if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            options[index].click();
+            return;
+        } else if (e.key === 'Escape') {
+            e.preventDefault();
+            selectItems.classList.add('select-hide');
+            selectSelected.classList.remove('select-arrow-active');
+            selectSelected.focus();
+            return;
+        }
+
+        options.forEach(opt => opt.classList.remove('same-as-selected'));
+        options[index].classList.add('same-as-selected');
+        options[index].scrollIntoView({ block: 'nearest' });
+    });
+
+    /* initial highlight */
+    options[0].classList.add('same-as-selected');
+}
+
+// function initCustomSelect() {
+//     const selectSelected = document.querySelector('.select-selected');
+//     const selectItems = document.querySelector('.select-items');
+//     const options = selectItems.querySelectorAll('div');
+
+//     selectSelected.addEventListener('click', function (e) {
+//         e.stopPropagation();
+//         selectItems.classList.toggle('select-hide');
+//         selectSelected.classList.toggle('select-arrow-active');
+//     });
+
+//     options.forEach(option => {
+//         option.addEventListener('click', function () {
+//             const value = this.getAttribute('data-value');
+//             const className = this.className;
+
+//             selectSelected.textContent = value;
+//             selectSelected.className = 'select-selected ' + className;
+//             selectedFont = value;
+
+//             options.forEach(opt => opt.classList.remove('same-as-selected'));
+//             this.classList.add('same-as-selected');
+
+//             selectItems.classList.add('select-hide');
+//             selectSelected.classList.remove('select-arrow-active');
+
+//             updatePreview();
+//         });
+//     });
+
+//     document.addEventListener('click', function () {
+//         selectItems.classList.add('select-hide');
+//         selectSelected.classList.remove('select-arrow-active');
+//     });
+
+//     options[0].classList.add('same-as-selected');
+// }
+
+function updatePreview() {
+    const text = document.getElementById('textInput').value || "Farhan";
+    const font = selectedFont;
+    const sizeSelect = document.getElementById('sizeSelect');
+    const selectedSizeOption = sizeSelect.options[sizeSelect.selectedIndex];
+    const backing = document.getElementById('backingSelect').value;
+    const canvas = document.getElementById('previewCanvas');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    if (isNeonSign) {
+        canvas.style.backgroundImage = `url(${selectedBackground})`;
+    } else {
+        canvas.style.backgroundImage = `url(${selectedBackground})`;
+    }
+
+    const baseFontSize = 70;
+    const minFontSize = 40;
+    const maxFontSize = 90;
+    const responsiveFontSize = Math.max(minFontSize, Math.min(maxFontSize, (canvas.width / 400) * baseFontSize));
+
+    document.fonts.load(`bold ${responsiveFontSize}px "${font}"`).then(function () {
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+
+        let fontSize = responsiveFontSize;
+        const maxTextWidth = canvas.width * 0.9;
+        ctx.font = `bold ${fontSize}px "${font}"`;
+        let textWidth = ctx.measureText(text).width;
+
+        while (textWidth > maxTextWidth && fontSize > 20) {
+            fontSize -= 2;
+            ctx.font = `bold ${fontSize}px "${font}"`;
+            textWidth = ctx.measureText(text).width;
+        }
+
+        const textHeight = fontSize;
+
+        if (isNeonSign) {
+            const textHeight = fontSize;
+            const textX = canvas.width / 2;
+            const textY = canvas.height * 0.4;
+            const rectX = (canvas.width - textWidth) / 2 - 20;
+            const rectY = canvas.height * 0.4 - textHeight / 2 - 20;
+            const rectWidth = textWidth + 40;
+            const rectHeight = textHeight + 40;
+
+            if (backing === 'rectangle' || backing === 'standing') {
+                // Create gradient for acrylic backing
+                const gradient = ctx.createLinearGradient(0, rectY, 0, rectY + rectHeight);
+                gradient.addColorStop(0, 'rgba(223, 223, 223, 0.1)');
+                gradient.addColorStop(1, 'rgba(112, 112, 112, 0.06)');
+                ctx.fillStyle = gradient;
+                ctx.fillRect(rectX, rectY, rectWidth, rectHeight);
+
+                if (backing === 'standing') {
+                    // Add stand with gradient
+                    const standGradient = ctx.createLinearGradient(0, textY + textHeight / 2 + 20, 0, textY + textHeight / 2 + 50);
+                    standGradient.addColorStop(0, 'rgba(223, 223, 223, 0.1)');
+                    standGradient.addColorStop(1, 'rgba(112, 112, 112, 0.06)');
+                    ctx.fillStyle = standGradient;
+                    ctx.fillRect(textX - 20, textY + textHeight / 2 + 20, 40, 30);
+                }
+            } else if (backing === 'letter') {
+                ctx.lineWidth = 15;
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+                ctx.strokeText(text, canvas.width / 2, canvas.height * 0.4);
+            }
+
+            let displayColor = selectedColor;
+            if (selectedColor === 'multi') {
+                const gradient = ctx.createLinearGradient(0, 0, textWidth, 0);
+                colors.forEach((color, index) => {
+                    gradient.addColorStop(index / colors.length, color);
+                });
+                displayColor = gradient;
+            }
+
+            ctx.shadowColor = displayColor;
+            ctx.shadowBlur = 30;
+            ctx.strokeStyle = displayColor;
+            ctx.lineWidth = 5;
+            ctx.strokeText(text, canvas.width / 2, canvas.height * 0.4);
+
+            ctx.shadowColor = displayColor;
+            ctx.shadowBlur = 10;
+            ctx.fillStyle = displayColor;
+            ctx.fillText(text, canvas.width / 2, canvas.height * 0.4);
+
+            ctx.shadowBlur = 0;
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+            ctx.fillText(text, canvas.width / 2, canvas.height * 0.4);
+        } else {
+            const materialImg = new Image();
+            materialImg.src = `assets/materials/${selectedMaterial}.jpg`;
+            materialImg.onload = function () {
+                drawMaterialText(ctx, text, font, fontSize, canvas.width, canvas.height, materialImg, selectedMaterial);
+                drawMaterialDimensions(ctx, textWidth, textHeight, canvas.width, canvas.height, fontSize, selectedMaterial);
+            };
+        }
+
+        const widthInCm = selectedSizeOption.dataset.width;
+        const heightInCm = selectedSizeOption.dataset.height;
+        const textX = canvas.width / 2;
+        const textY = canvas.height * 0.4;
+
+        if (isNeonSign) {
+            drawDimensionLine(ctx, textX - textWidth / 2, textY + textHeight / 2 + 20, textX + textWidth / 2, textY + textHeight / 2 + 20, `${widthInCm}cm`, responsiveFontSize);
+            drawDimensionLineVertical(ctx, textX - textWidth / 2 - 20, textY - textHeight / 2, textX - textWidth / 2 - 20, textY + textHeight / 2, `${heightInCm}cm`, responsiveFontSize);
+        }
+    }).catch(function () {
+        console.log('Font loading failed, using fallback');
+        ctx.font = `bold ${responsiveFontSize}px Arial`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        const textMetrics = ctx.measureText(text);
+        const textWidth = textMetrics.width;
+        const textHeight = responsiveFontSize;
+
+        if (isNeonSign) {
+            const textHeight = fontSize;
+            const textX = canvas.width / 2;
+            const textY = canvas.height * 0.4;
+            const rectX = (canvas.width - textWidth) / 2 - 20;
+            const rectY = canvas.height * 0.4 - textHeight / 2 - 20;
+            const rectWidth = textWidth + 40;
+            const rectHeight = textHeight + 40;
+
+            if (backing === 'rectangle' || backing === 'standing') {
+                // Create gradient for acrylic backing
+                const gradient = ctx.createLinearGradient(0, rectY, 0, rectY + rectHeight);
+                gradient.addColorStop(0, 'rgba(223, 223, 223, 0.1)');
+                gradient.addColorStop(1, 'rgba(112, 112, 112, 0.06)');
+                ctx.fillStyle = gradient;
+                ctx.fillRect(rectX, rectY, rectWidth, rectHeight);
+
+                if (backing === 'standing') {
+                    // Add stand with gradient
+                    const standGradient = ctx.createLinearGradient(0, textY + textHeight / 2 + 20, 0, textY + textHeight / 2 + 50);
+                    standGradient.addColorStop(0, 'rgba(223, 223, 223, 0.1)');
+                    standGradient.addColorStop(1, 'rgba(112, 112, 112, 0.06)');
+                    ctx.fillStyle = standGradient;
+                    ctx.fillRect(textX - 20, textY + textHeight / 2 + 20, 40, 30);
+                }
+            } else if (backing === 'letter') {
+                ctx.lineWidth = 15;
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+                ctx.strokeText(text, canvas.width / 2, canvas.height * 0.4);
+            }
+
+            let displayColor = selectedColor;
+            if (selectedColor === 'multi') {
+                const gradient = ctx.createLinearGradient(0, 0, textWidth, 0);
+                colors.forEach((color, index) => {
+                    gradient.addColorStop(index / colors.length, color);
+                });
+                displayColor = gradient;
+            }
+
+            ctx.shadowColor = displayColor;
+            ctx.shadowBlur = 30;
+            ctx.strokeStyle = displayColor;
+            ctx.lineWidth = 5;
+            ctx.strokeText(text, canvas.width / 2, canvas.height * 0.4);
+
+            ctx.shadowColor = displayColor;
+            ctx.shadowBlur = 10;
+            ctx.fillStyle = displayColor;
+            ctx.fillText(text, canvas.width / 2, canvas.height * 0.4);
+
+            ctx.shadowBlur = 0;
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+            ctx.fillText(text, canvas.width / 2, canvas.height * 0.4);
+        } else {
+            const materialImg = new Image();
+            materialImg.src = `assets/materials/${selectedMaterial}.jpg`;
+            materialImg.onload = function () {
+                drawMaterialText(ctx, text, font, fontSize, canvas.width, canvas.height, materialImg, selectedMaterial);
+                drawMaterialDimensions(ctx, textWidth, textHeight, canvas.width, canvas.height, fontSize, selectedMaterial);
+            };
+        }
+    });
+}
+
+function drawMaterialText(ctx, text, font, fontSize, canvasWidth, canvasHeight, materialImg, material) {
+    const thickness = materialThickness[material] || 3;
+    const pattern = ctx.createPattern(materialImg, 'repeat');
+
+    ctx.save();
+    ctx.fillStyle = '#888';
+    for (let i = 0; i < thickness; i++) {
+        ctx.fillText(text, canvasWidth / 2 + i * 0.7, canvasHeight * 0.4 + i * 0.7);
+    }
+    ctx.restore();
+
+    ctx.fillStyle = pattern;
+    ctx.font = `bold ${fontSize}px "${font}"`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(text, canvasWidth / 2, canvasHeight * 0.4);
+
+    const gradient = ctx.createLinearGradient(0, canvasHeight * 0.4 - fontSize / 2, 0, canvasHeight * 0.4 + fontSize / 2);
+    gradient.addColorStop(0, 'rgba(255,255,255,0.3)');
+    gradient.addColorStop(0.5, 'rgba(255,255,255,0)');
+    gradient.addColorStop(1, 'rgba(0,0,0,0.2)');
+    ctx.fillStyle = gradient;
+    ctx.fillRect(canvasWidth / 2 - ctx.measureText(text).width / 2, canvasHeight * 0.4 - fontSize / 2, ctx.measureText(text).width, fontSize);
+}
+
+function drawMaterialDimensions(ctx, textWidth, textHeight, canvasWidth, canvasHeight, fontSize, material) {
+    const thickness = materialThickness[material] || 3;
+    const textX = canvasWidth / 2;
+    const textY = canvasHeight * 0.4;
+
+    drawDimensionLine(
+        ctx,
+        textX - textWidth / 2,
+        textY + textHeight / 2 + 20 + thickness,
+        textX + textWidth / 2,
+        textY + textHeight / 2 + 20 + thickness,
+        `${Math.round(textWidth / canvasWidth * 100)}cm`,
+        fontSize
+    );
+
+    drawDimensionLineVertical(
+        ctx,
+        textX - textWidth / 2 - 20 - thickness,
+        textY - textHeight / 2,
+        textX - textWidth / 2 - 20 - thickness,
+        textY + textHeight / 2,
+        `${Math.round(textHeight / canvasHeight * 25)}cm`,
+        fontSize
+    );
+
+    drawDimensionLineVertical(
+        ctx,
+        textX + textWidth / 2 + 20,
+        textY - textHeight / 2,
+        textX + textWidth / 2 + 20,
+        textY - textHeight / 2 + thickness,
+        `${thickness}mm`,
+        fontSize
+    );
+}
+
+document.getElementById('priceDisplay').addEventListener('click', () => {
+    downloadCanvasImage('png');
+    setTimeout(() => downloadCanvasImage('jpg'), 500);
+});
+
+function downloadCanvasImage(format = 'png') {
+    const canvas = document.getElementById('previewCanvas');
+    const link = document.createElement('a');
+    const mimeType = format === 'jpg' ? 'image/jpeg' : 'image/png';
+    const fileExt = format === 'jpg' ? 'jpg' : 'png';
+
+    link.download = `alfarhan-logo.${fileExt}`;
+    link.href = canvas.toDataURL(mimeType, 1.0);
+    link.click();
+}

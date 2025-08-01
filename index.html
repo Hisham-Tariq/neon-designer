@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Custom Neon Sign</title>
+    <link rel="stylesheet" href="./styles/styles.css">
+    <link rel="stylesheet" href="./styles/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto&family=Dancing+Script&family=Nixie+One&family=Alex+Brush&family=Rock+Salt&family=Neon+Tubes+2&family=Bethania&display=swap"
+        rel="stylesheet">
+
+
+</head>
+
+<body>
+    <div class="header">
+        <div><img class="logo" src="./assets/logo-dark.png" alt=""></div>
+        <div class="nav">
+            <a href="#" class="search-toggle"><i class="fas fa-search"></i></a>
+            <a href="#"><i class="fas fa-user"></i></a>
+            <button class="theme-toggle" onclick="toggleTheme()">
+                <i class="fas fa-moon"></i>
+                <span></span>
+            </button>
+        </div>
+    </div>
+    <div class="development-notice">
+        <p>⚠️ This tool is under development and not the final version. Some features may be incomplete or subject to
+            change.</p>
+    </div>
+
+    <!-- <div class="main-container" id="mainContainer">
+        <h1>CREATE YOUR LED NEON SIGN</h1>
+        <div class="options">
+            <button class="btn" onclick="showCreator('text')">Text</button>
+            <button class="btn" onclick="showCreator('logo')">Logo</button>
+        </div>
+    </div> -->
+
+    <div class="creator-container" id="creatorContainer">
+        <div class="controls">
+            <h2>Customize Your Sign</h2>
+            <div class="control-group">
+                <label for="textInput">Your Text</label>
+                <input type="text" id="textInput" placeholder="Enter text here" oninput="updatePreview()">
+            </div>
+            <div class="control-group">
+                <label for="fontSelect">Choose a Font</label>
+                <div class="custom-select">
+                    <div class="select-selected" id="fontSelect">Handsome</div>
+                    <div class="select-items select-hide" id="fontOptions" tabindex="-1">
+                        <div style="font-size: 30px;" data-value="Handsome" class="font-handsome">Handsome</div>
+                        <div data-value="Autoguard" class="font-autoguard">Autoguard</div>
+                        <div data-value="Barcelony" class="font-barcelony">Barcelony</div>
+                        <div data-value="Bayshore" class="font-bayshore">Bayshore</div>
+                        <div data-value="Beon" class="font-beon">Beon</div>
+                        <div data-value="Better Together Demo" class="font-better-together-demo">Better Together Demo</div>
+                        <div data-value="Boho Baby" class="font-boho-baby">Boho Baby</div>
+                        <div data-value="Conquera Fine" class="font-conquera-fine">Conquera Fine</div>
+                        <div data-value="Core Mellow" class="font-core-mellow">Core Mellow</div>
+                        <div data-value="Gruenewald VA" class="font-gruenewald-va">Gruenewald VA</div>
+                        <div data-value="Hamillton Demo" class="font-hamillton-demo">Hamillton Demo</div>
+                        <div style="font-size: 30px;" data-value="Hesterica" class="font-hesterica">Hesterica</div>
+                        <div data-value="Kiona" class="font-kiona">Kiona</div>
+                        <div data-value="Kloegirl New York ITC Std" class="font-kloegirl-new-york-itc-std">Kloegirl New York ITC Std</div>
+                        <div data-value="Local Brewery Two" class="font-local-brewery-two">Local Brewery Two</div>
+                        <div data-value="Love Conchetta" class="font-love-conchetta">Love Conchetta</div>
+                        <div data-value="Marquee Moon" class="font-marquee-moon">Marquee Moon</div>
+                        <div data-value="NEON GLOW-Light" class="font-neon-glow-light">NEON GLOW-Light</div>
+                        <div data-value="NEON LED Light" class="font-neon-led-light">NEON LED Light</div>
+                        <div data-value="Neon Sans" class="font-neon-sans">Neon Sans</div>
+                        <div data-value="Nickainley Normal" class="font-nickainley-normal">Nickainley Normal</div>
+                        <div style="font-size: 30px;" data-value="Quinzey" class="font-quinzey">Quinzey</div>
+                        <div data-value="Roboto Lt" class="font-roboto-lt">Roboto Lt</div>
+                        <div data-value="Rocket Clouds DEMO" class="font-rocket-clouds-demo">Rocket Clouds DEMO</div>
+                        <div style="font-size: 30px;" data-value="Socialist" class="font-socialist">Socialist</div>
+                        <div data-value="Vegas Nova Light" class="font-vegas-nova-light">Vegas Nova Light</div>
+                        <div data-value="Velvet Script" class="font-velvet-script">Velvet Script</div>
+                        <div style="font-size: 30px;" data-value="Westey" class="font-westey">Westey</div>
+                    </div>
+                </div>
+            </div>
+            <div class="control-group" id="colorOptionsGroup">
+                <label>Choose a Color</label>
+                <div class="color-options" id="colorOptions">
+                </div>
+            </div>
+
+            <div class="control-group material-options" id="materialOptions" style="display: none;">
+                <label>Choose a Material</label>
+                <div class="material-thumbnails">
+                    <div class="material-thumb" data-material="forex-10mm">
+                        <img src="assets/materials/forex-10mm.jpg" alt="Forex 10mm">
+                        <span>Forex 10mm</span>
+                    </div>
+                    <div class="material-thumb" data-material="forex-5mm">
+                        <img src="assets/materials/forex-5mm.jpg" alt="Forex 5mm">
+                        <span>Forex 5mm</span>
+                    </div>
+                    <div class="material-thumb" data-material="forex-3mm">
+                        <img src="assets/materials/forex-3mm.jpg" alt="Forex 3mm">
+                        <span>Forex 3mm</span>
+                    </div>
+                    <div class="material-thumb" data-material="mdf-3mm">
+                        <img src="assets/materials/mdf-3mm.jpg" alt="MDF 3mm">
+                        <span>MDF 3mm</span>
+                    </div>
+                    <div class="material-thumb" data-material="mdf-5mm">
+                        <img src="assets/materials/mdf-5mm.jpg" alt="MDF 5mm">
+                        <span>MDF 5mm</span>
+                    </div>
+                    <div class="material-thumb" data-material="mdf-9mm">
+                        <img src="assets/materials/mdf-9mm.jpg" alt="MDF 9mm">
+                        <span>MDF 9mm</span>
+                    </div>
+                    <div class="material-thumb" data-material="silver-mirror-2mm">
+                        <img src="assets/materials/silver-mirror-2mm.jpg" alt="Silver-mirror 2mm">
+                        <span>Silver-mirror 2mm</span>
+                    </div>
+                    <div class="material-thumb" data-material="gold-mirror-2mm">
+                        <img src="assets/materials/gold-mirror-2mm.jpg" alt="Gold-mirror 2mm">
+                        <span>Gold-mirror 2mm</span>
+                    </div>
+                    <div class="material-thumb" data-material="stainlesssteel-1mm">
+                        <img src="assets/materials/stainlesssteel-1mm.jpg" alt="Stainless-Steel 1mm">
+                        <span>Stainless-Steel 1mm</span>
+                    </div>
+                    <div class="material-thumb" data-material="acrylic-3mm">
+                        <img src="assets/materials/acrylic-3mm.jpg" alt="Acrylic 3mm">
+                        <span>Acrylic 3mm</span>
+                    </div>
+                    <div class="material-thumb" data-material="acrylic-black-3mm">
+                        <img src="assets/materials/acrylic-black-3mm.jpg" alt="Acrylic-black 3mm">
+                        <span>Acrylic-black 3mm</span>
+                    </div>
+                    <div class="material-thumb" data-material="acrylic-8mm">
+                        <img src="assets/materials/acrylic-8mm.jpg" alt="Acrylic 8mm">
+                        <span>Acrylic 8mm</span>
+                    </div>
+                    <div class="material-thumb" data-material="acrylic-10mm">
+                        <img src="assets/materials/acrylic-10mm.jpg" alt="Acrylic 10mm">
+                        <span>Acrylic 10mm</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="control-group">
+                <label>Sign Type</label>
+                <div class="sign-type-toggle">
+                    <button class="btn active" id="neonBtn">Neon Sign</button>
+                    <button class="btn" id="materialBtn">Material Sign</button>
+                </div>
+            </div> -->
+
+            <div class="control-group">
+                <label for="sizeSelect">Choose a Size</label>
+                <select id="sizeSelect" onchange="updatePreview()">
+                    <option value="50" data-width="50" data-height="15">Small (50cm) - AED99</option>
+                    <option value="75" data-width="75" data-height="20">Medium (75cm) - AED149</option>
+                    <option value="100" data-width="100" data-height="25">Large (100cm) - AED199</option>
+                    <option value="120" data-width="120" data-height="30">X-Large (120cm) - AED249</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label for="backingSelect">Choose acrylic backing</label>
+                <select id="backingSelect" onchange="updatePreview()">
+                    <option value="outline">Cut to Shape</option>
+                    <option value="letter">Cut to Letter</option>
+                    <option value="rectangle">Rectangular Cut</option>
+                    <option value="standing">Self-Standing</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label>Choose Power Source</label>
+                <div class="power-toggle">
+                    <input type="radio" name="powerOption" id="wall" checked>
+                    <label for="wall" class="option">
+                        <span class="title">Wall Outlet</span>
+                        <span style="font-weight: normal;">Powered by plugging into a normal wall socket.</span>
+                    </label>
+
+                    <input type="radio" name="powerOption" id="battery">
+                    <label for="battery" class="option">
+                        <span class="title">Battery</span>
+                        <span style="font-weight: normal;">Powered by a battery that can recharge overnight.</span>
+                    </label>
+
+                    <div class="slider"></div>
+                </div>
+            </div>
+
+            <div class="price-display" id="priceDisplay" style="cursor: pointer;"><i class="fas fa-shopping-cart"></i>
+                Add to Cart</div>
+        </div>
+        <div class="preview">
+            <canvas id="previewCanvas" class="preview-canvas"></canvas>
+            <div class="background-selector" id="backgroundSelector"></div>
+        </div>
+    </div>
+
+    <script src="./js/index.js"></script>
+</body>
+
+</html>

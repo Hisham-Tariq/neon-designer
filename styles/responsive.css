@@ -1,0 +1,213 @@
+/* Responsive styles */
+/* Large screens */
+@media screen and (min-width: 1400px) {
+    .creator-container {
+        padding: 40px;
+        gap: 50px;
+        margin: 0 auto;
+        max-width: 90%;
+    }
+}
+
+/* Medium screens */
+@media screen and (min-width: 768px) and (max-width: 1399px) {
+    .creator-container {
+        padding: 30px;
+        gap: 30px;
+        margin: 0 20px;
+    }
+
+    .controls {
+        min-width: 300px;
+        max-width: 400px;
+    }
+}
+
+/* Mobile screens */
+@media screen and (min-width: 1400px) {
+    .creator-container {
+        padding: 50px;
+        gap: 60px;
+        margin: 0 auto;
+        max-width: 1800px;
+    }
+
+    .controls {
+        min-width: 350px;
+        max-width: 450px;
+    }
+
+    .preview {
+        max-width: 1200px;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1399px) {
+    .creator-container {
+        padding: 30px;
+        gap: 40px;
+        margin: 0 auto;
+        max-width: 90%;
+    }
+
+    .controls {
+        min-width: 320px;
+        max-width: 400px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .header {
+        padding: 10px 20px;
+    }
+
+    .logo {
+        width: 180px;
+        min-width: 150px;
+    }
+
+    .creator-container {
+        padding: 15px;
+        gap: 20px;
+        margin: 0 10px;
+    }
+
+    .controls {
+        width: 100%;
+        padding: 15px;
+        max-height: none;
+        overflow-y: visible;
+    }
+
+    .preview {
+        min-height: 250px;
+    }
+
+    .material-thumbnails {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    }
+
+    .material-thumb span {
+        font-size: 10px;
+    }
+
+    .power-toggle {
+        height: 120px;
+    }
+
+    .power-toggle .option {
+        padding: 8px;
+    }
+
+    .select-selected,
+    .select-items div {
+        padding: 8px;
+        font-size: 14px;
+    }
+}
+
+/* iPad and Tablets */
+@media screen and (min-width: 481px) and (max-width: 768px) {
+    .creator-container {
+        gap: 20px;
+    }
+
+    .controls {
+        width: 100%;
+        order: 2;
+    }
+
+    .preview {
+        order: 1;
+        min-height: 350px;
+    }
+}
+
+/* Landscape mode for mobile devices */
+@media screen and (max-height: 480px) and (orientation: landscape) {
+    .creator-container {
+        flex-direction: row;
+        height: calc(100vh - 100px);
+        overflow: hidden;
+    }
+
+    .controls {
+        width: 40%;
+        max-height: 100%;
+        overflow-y: auto;
+    }
+
+    .preview {
+        width: 60%;
+        height: 100%;
+    }
+}
+
+/* High DPI screens */
+@media screen and (-webkit-min-device-pixel-ratio: 2),
+screen and (min-resolution: 192dpi) {
+    .preview-canvas {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+}
+
+/* Touch device optimizations */
+.touch-device .color-box,
+.touch-device .material-thumb,
+.touch-device .bg-thumb,
+.touch-device .select-selected,
+.touch-device .select-items div {
+    min-height: 44px;
+    /* Minimum touch target size */
+}
+
+.touch-device .select-items {
+    -webkit-overflow-scrolling: touch;
+    /* Smooth scrolling on iOS */
+}
+
+/* Prevent text selection on interactive elements */
+.color-box,
+.material-thumb,
+.bg-thumb,
+.select-selected,
+.power-toggle .option,
+.sign-type-toggle .btn {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Fix for older Safari versions */
+@supports (-webkit-touch-callout: none) {
+    .creator-container {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: flex;
+    }
+
+    .preview-canvas {
+        width: 100%;
+        height: 100%;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+    }
+}
+
+/* Print styles */
+@media print {
+
+    .controls,
+    .background-selector,
+    .development-notice {
+        display: none !important;
+    }
+
+    .preview {
+        width: 100% !important;
+        height: auto !important;
+        box-shadow: none !important;
+    }
+}
