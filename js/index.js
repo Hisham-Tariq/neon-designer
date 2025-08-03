@@ -882,21 +882,40 @@ function updateNeonText(text, font, fontSize, color) {
 }
 
 function getNeonColorMapping(color) {
-    // Color mappings based on your example: darker color for 3px shadow, brighter for main glow
-    const colorMappings = {
-        'orange': { primary: '#ff981a', darker: '#c16a01' },
-        'red': { primary: '#ff0040', darker: '#cc0033' },
-        'blue': { primary: '#0080ff', darker: '#0066cc' },
-        'green': { primary: '#00ff40', darker: '#00cc33' },
-        'yellow': { primary: '#ffff00', darker: '#cccc00' },
-        'purple': { primary: '#8040ff', darker: '#6633cc' },
-        'pink': { primary: '#ff40a0', darker: '#cc3380' },
-        'white': { primary: '#ffffff', darker: '#cccccc' },
-        'cyan': { primary: '#00ffff', darker: '#00cccc' }
+    // Handle gradient objects
+    if (typeof color === 'object') {
+        return { primary: '#ff981a', darker: '#c16a01' }; // Default orange for gradients
+    }
+    
+    // Map hex colors to neon color pairs (based on your CSS text-shadow example)
+    const hexColorMappings = {
+        '#ff00ff': { primary: '#ff40a0', darker: '#cc3380' }, // Magenta/Pink
+        '#00e1ffff': { primary: '#00ffff', darker: '#00cccc' }, // Cyan
+        '#ffe600ff': { primary: '#ffff00', darker: '#cccc00' }, // Yellow
+        '#00ff00': { primary: '#00ff40', darker: '#00cc33' }, // Green
+        '#ff0000': { primary: '#ff0040', darker: '#cc0033' }, // Red
+        '#dee2e6': { primary: '#ffffff', darker: '#cccccc' }, // White/Gray
+        '#ff6200': { primary: '#ff981a', darker: '#c16a01' }, // Orange
+        '#a020f0': { primary: '#8040ff', darker: '#6633cc' }, // Purple
+        '#ff1493': { primary: '#ff40a0', darker: '#cc3380' }, // Deep Pink
+        '#32cd32': { primary: '#00ff40', darker: '#00cc33' }  // Lime Green
     };
     
-    // Return mapping or default to orange if color not found
-    return colorMappings[color] || colorMappings['orange'];
+    // Return specific mapping or create one based on the color
+    if (hexColorMappings[color]) {
+        return hexColorMappings[color];
+    }
+    
+    // For any other hex color, create a darker version for the 3px shadow
+    if (color.startsWith('#')) {
+        return {
+            primary: color,
+            darker: darkenColor(color, 0.3)
+        };
+    }
+    
+    // Default fallback
+    return { primary: '#ff981a', darker: '#c16a01' };
 }
 
 function darkenColor(hex, factor) {
