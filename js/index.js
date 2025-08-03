@@ -47,12 +47,42 @@ window.onload = function () {
     populateColors();
     populateBackgrounds();
     preloadFonts();
+    preloadBackgroundImages();
     updatePreview();
     initCustomSelect();
     initMaterialSelection();
     document.getElementById('neonBtn').addEventListener('click', () => toggleSignType('neon'));
     document.getElementById('materialBtn').addEventListener('click', () => toggleSignType('material'));
 };
+
+// Preload background images for better performance
+function preloadBackgroundImages() {
+    // Preload current background first
+    preloadImage(selectedBackground);
+    
+    // Preload other backgrounds with slight delay to prioritize current one
+    setTimeout(() => {
+        backgrounds.forEach(bg => {
+            if (bg !== selectedBackground) {
+                preloadImage(bg);
+            }
+        });
+    }, 1000);
+}
+
+function preloadImage(src) {
+    if (!preloadedImages.has(src)) {
+        const img = new Image();
+        img.onload = () => {
+            preloadedImages.set(src, img);
+            console.log(`Background image ${src} preloaded`);
+        };
+        img.onerror = () => {
+            console.error(`Failed to preload image: ${src}`);
+        };
+        img.src = src;
+    }
+}
 
 // Preload all fonts to ensure they're available
 function preloadFonts() {
@@ -86,6 +116,7 @@ const backgrounds = [
     'assets/5.jpg'
 ];
 let selectedBackground = backgrounds[1];
+let preloadedImages = new Map();
 let isNeonSign = true;
 let selectedMaterial = 'forex-10mm';
 const materialThickness = {
@@ -164,6 +195,12 @@ function selectBackground(element, bg) {
     document.querySelectorAll('.bg-thumb').forEach(thumb => thumb.classList.remove('active'));
     element.classList.add('active');
     selectedBackground = bg;
+    
+    // Preload the selected background if not already loaded
+    if (!preloadedImages.has(bg)) {
+        preloadImage(bg);
+    }
+    
     updatePreview();
 }
 
@@ -373,17 +410,29 @@ function updatePreview() {
     const backing = document.getElementById('backingSelect').value;
     const canvas = document.getElementById('previewCanvas');
     const ctx = canvas.getContext('2d');
+    const loadingOverlay = document.getElementById('loadingOverlay');
+    
+    // Show loading if image is not preloaded
+    if (!preloadedImages.has(selectedBackground)) {
+        loadingOverlay.style.display = 'flex';
+    }
 
     canvas.width = canvas.offsetWidth;
     canvas.height = canvas.offsetHeight;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+    // Set background and hide loading overlay
     if (isNeonSign) {
         canvas.style.backgroundImage = `url(${selectedBackground})`;
     } else {
         canvas.style.backgroundImage = `url(${selectedBackground})`;
     }
+    
+    // Hide loading overlay after background is set
+    setTimeout(() => {
+        loadingOverlay.style.display = 'none';
+    }, 100);
 
     const baseFontSize = 70;
     const minFontSize = 40;

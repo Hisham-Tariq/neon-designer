@@ -23,7 +23,7 @@
     }
 }
 
-/* Mobile screens */
+/* Extra Large screens */
 @media screen and (min-width: 1400px) {
     .creator-container {
         padding: 50px;
@@ -42,23 +42,13 @@
     }
 }
 
-@media screen and (min-width: 768px) and (max-width: 1399px) {
-    .creator-container {
-        padding: 30px;
-        gap: 40px;
-        margin: 0 auto;
-        max-width: 90%;
-    }
-
-    .controls {
-        min-width: 320px;
-        max-width: 400px;
-    }
-}
+/* Remove duplicate - this is already handled in main CSS */
 
 @media screen and (max-width: 480px) {
     .header {
-        padding: 10px 20px;
+        padding: 10px 15px;
+        flex-direction: column;
+        gap: 10px;
     }
 
     .logo {
@@ -66,10 +56,17 @@
         min-width: 150px;
     }
 
-    .creator-container {
-        padding: 15px;
+    .nav {
+        width: 100%;
+        justify-content: center;
         gap: 20px;
-        margin: 0 10px;
+    }
+
+    .creator-container {
+        padding: 10px;
+        gap: 15px;
+        margin: 0;
+        flex-direction: column;
     }
 
     .controls {
@@ -77,32 +74,83 @@
         padding: 15px;
         max-height: none;
         overflow-y: visible;
+        order: 2;
     }
 
     .preview {
-        min-height: 250px;
+        min-height: 280px;
+        order: 1;
+        padding: 15px;
     }
 
     .material-thumbnails {
-        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+    }
+
+    .material-thumb {
+        min-height: 44px;
     }
 
     .material-thumb span {
-        font-size: 10px;
+        font-size: 11px;
+        padding: 3px;
     }
 
     .power-toggle {
-        height: 120px;
+        height: 100px;
     }
 
     .power-toggle .option {
-        padding: 8px;
+        padding: 6px;
+    }
+
+    .power-toggle .option .title {
+        font-size: 14px;
+    }
+
+    .power-toggle .option span {
+        font-size: 11px;
     }
 
     .select-selected,
     .select-items div {
-        padding: 8px;
+        padding: 12px;
+        font-size: 16px;
+        min-height: 44px;
+    }
+
+    .color-box {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+        min-height: 36px;
+    }
+
+    .bg-thumb {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+        min-height: 36px;
+    }
+
+    .background-selector {
+        gap: 6px;
+        padding: 6px;
+        flex-wrap: wrap;
+        bottom: 5px;
+    }
+
+    .control-group input,
+    .control-group select {
+        font-size: 16px;
+        padding: 12px;
+    }
+
+    .price-display {
         font-size: 14px;
+        padding: 10px;
+        margin-top: 10px;
     }
 }
 
@@ -110,16 +158,35 @@
 @media screen and (min-width: 481px) and (max-width: 768px) {
     .creator-container {
         gap: 20px;
+        padding: 20px;
+        flex-direction: column;
     }
 
     .controls {
         width: 100%;
         order: 2;
+        max-width: 600px;
+        margin: 0 auto;
     }
 
     .preview {
         order: 1;
         min-height: 350px;
+        width: 100%;
+    }
+
+    .material-thumbnails {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .color-box {
+        width: 40px;
+        height: 40px;
+    }
+
+    .bg-thumb {
+        width: 45px;
+        height: 45px;
     }
 }
 
@@ -153,18 +220,41 @@ screen and (min-resolution: 192dpi) {
 }
 
 /* Touch device optimizations */
-.touch-device .color-box,
-.touch-device .material-thumb,
-.touch-device .bg-thumb,
-.touch-device .select-selected,
-.touch-device .select-items div {
+.color-box,
+.material-thumb,
+.bg-thumb,
+.select-selected,
+.select-items div,
+.power-toggle .option,
+.sign-type-toggle .btn {
     min-height: 44px;
-    /* Minimum touch target size */
+    /* Minimum touch target size for better accessibility */
 }
 
-.touch-device .select-items {
+.select-items {
     -webkit-overflow-scrolling: touch;
     /* Smooth scrolling on iOS */
+}
+
+/* Improve touch feedback */
+.color-box:active,
+.material-thumb:active,
+.bg-thumb:active {
+    transform: scale(0.95);
+    transition: transform 0.1s ease;
+}
+
+/* Better mobile typography */
+@media screen and (max-width: 768px) {
+    body {
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+    }
+    
+    .development-notice {
+        font-size: 13px;
+        line-height: 1.4;
+    }
 }
 
 /* Prevent text selection on interactive elements */

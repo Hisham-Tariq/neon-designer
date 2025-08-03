@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>Custom Neon Sign</title>
     <link rel="stylesheet" href="./styles/styles.css">
     <link rel="stylesheet" href="./styles/responsive.css">
@@ -198,6 +198,10 @@
         </div>
         <div class="preview">
             <canvas id="previewCanvas" class="preview-canvas"></canvas>
+            <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+                <div class="loading-spinner"></div>
+                <p>Loading preview...</p>
+            </div>
             <div class="background-selector" id="backgroundSelector"></div>
         </div>
     </div>
