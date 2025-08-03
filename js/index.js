@@ -496,21 +496,96 @@ function updatePreview() {
                 displayColor = gradient;
             }
 
-            ctx.shadowColor = displayColor;
-            ctx.shadowBlur = 30;
-            ctx.strokeStyle = displayColor;
-            ctx.lineWidth = 5;
-            ctx.strokeText(text, canvas.width / 2, canvas.height * 0.4);
-
-            ctx.shadowColor = displayColor;
+            // Apply CSS text-shadow technique to canvas neon rendering
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height * 0.4;
+            
+            // Get color mapping for the selected color
+            const neonColors = getNeonColorMapping(displayColor);
+            
+            // Layer 1: Outer shadow (40px blur)
+            ctx.shadowColor = neonColors.primary;
+            ctx.shadowBlur = 40;
+            ctx.shadowOffsetX = 0;
+            ctx.shadowOffsetY = 0;
+            ctx.fillStyle = neonColors.primary;
+            ctx.globalAlpha = 0.3;
+            ctx.fillText(text, centerX, centerY);
+            
+            // Layer 2: 32px blur
+            ctx.shadowBlur = 32;
+            ctx.globalAlpha = 0.4;
+            ctx.fillText(text, centerX, centerY);
+            
+            // Layer 3: 28px blur
+            ctx.shadowBlur = 28;
+            ctx.globalAlpha = 0.5;
+            ctx.fillText(text, centerX, centerY);
+            
+            // Layer 4: 24px blur
+            ctx.shadowBlur = 24;
+            ctx.globalAlpha = 0.6;
+            ctx.fillText(text, centerX, centerY);
+            
+            // Layer 5: 20px blur
+            ctx.shadowBlur = 20;
+            ctx.globalAlpha = 0.7;
+            ctx.fillText(text, centerX, centerY);
+            
+            // Layer 6: 16px blur
+            ctx.shadowBlur = 16;
+            ctx.globalAlpha = 0.8;
+            ctx.fillText(text, centerX, centerY);
+            
+            // Layer 7: 13px blur
+            ctx.shadowBlur = 13;
+            ctx.globalAlpha = 0.85;
+            ctx.fillText(text, centerX, centerY);
+            
+            // Layer 8: 10px blur
             ctx.shadowBlur = 10;
-            ctx.fillStyle = displayColor;
-            ctx.fillText(text, canvas.width / 2, canvas.height * 0.4);
-
+            ctx.globalAlpha = 0.9;
+            ctx.fillText(text, centerX, centerY);
+            
+            // Layer 9: 6px blur
+            ctx.shadowBlur = 6;
+            ctx.globalAlpha = 0.95;
+            ctx.fillText(text, centerX, centerY);
+            
+            // Layer 10: 3px blur with darker color
+            ctx.shadowColor = neonColors.darker;
+            ctx.shadowBlur = 3;
+            ctx.globalAlpha = 1;
+            ctx.fillText(text, centerX, centerY);
+            
+            // Layer 11: Drop shadow (1px offset)
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
+            ctx.shadowBlur = 1;
+            ctx.shadowOffsetX = 1;
+            ctx.shadowOffsetY = 1;
+            ctx.fillText(text, centerX, centerY);
+            
+            // Layer 12: Core text (no shadow)
             ctx.shadowBlur = 0;
+            ctx.shadowOffsetX = 0;
+            ctx.shadowOffsetY = 0;
+            ctx.fillStyle = neonColors.primary;
+            ctx.globalAlpha = 1;
+            ctx.fillText(text, centerX, centerY);
+            
+            // Layer 13: Bright center
             ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
-            ctx.fillText(text, canvas.width / 2, canvas.height * 0.4);
+            ctx.fillText(text, centerX, centerY);
+            
+            // Reset alpha for other elements
+            ctx.globalAlpha = 1;
+            
+            // Hide CSS neon text since we're using canvas
+            document.getElementById('neonText').style.display = 'none';
         } else {
+            // Hide neon text for material signs
+            document.getElementById('neonText').style.display = 'none';
+            
             const materialImg = new Image();
             materialImg.src = `assets/materials/${selectedMaterial}.jpg`;
             materialImg.onload = function () {
@@ -577,21 +652,96 @@ function updatePreview() {
                 displayColor = gradient;
             }
 
-            ctx.shadowColor = displayColor;
-            ctx.shadowBlur = 30;
-            ctx.strokeStyle = displayColor;
-            ctx.lineWidth = 5;
-            ctx.strokeText(text, canvas.width / 2, canvas.height * 0.4);
-
-            ctx.shadowColor = displayColor;
+            // Apply CSS text-shadow technique to canvas neon rendering
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height * 0.4;
+            
+            // Get color mapping for the selected color
+            const neonColors = getNeonColorMapping(displayColor);
+            
+            // Layer 1: Outer shadow (40px blur)
+            ctx.shadowColor = neonColors.primary;
+            ctx.shadowBlur = 40;
+            ctx.shadowOffsetX = 0;
+            ctx.shadowOffsetY = 0;
+            ctx.fillStyle = neonColors.primary;
+            ctx.globalAlpha = 0.3;
+            ctx.fillText(text, centerX, centerY);
+            
+            // Layer 2: 32px blur
+            ctx.shadowBlur = 32;
+            ctx.globalAlpha = 0.4;
+            ctx.fillText(text, centerX, centerY);
+            
+            // Layer 3: 28px blur
+            ctx.shadowBlur = 28;
+            ctx.globalAlpha = 0.5;
+            ctx.fillText(text, centerX, centerY);
+            
+            // Layer 4: 24px blur
+            ctx.shadowBlur = 24;
+            ctx.globalAlpha = 0.6;
+            ctx.fillText(text, centerX, centerY);
+            
+            // Layer 5: 20px blur
+            ctx.shadowBlur = 20;
+            ctx.globalAlpha = 0.7;
+            ctx.fillText(text, centerX, centerY);
+            
+            // Layer 6: 16px blur
+            ctx.shadowBlur = 16;
+            ctx.globalAlpha = 0.8;
+            ctx.fillText(text, centerX, centerY);
+            
+            // Layer 7: 13px blur
+            ctx.shadowBlur = 13;
+            ctx.globalAlpha = 0.85;
+            ctx.fillText(text, centerX, centerY);
+            
+            // Layer 8: 10px blur
             ctx.shadowBlur = 10;
-            ctx.fillStyle = displayColor;
-            ctx.fillText(text, canvas.width / 2, canvas.height * 0.4);
-
+            ctx.globalAlpha = 0.9;
+            ctx.fillText(text, centerX, centerY);
+            
+            // Layer 9: 6px blur
+            ctx.shadowBlur = 6;
+            ctx.globalAlpha = 0.95;
+            ctx.fillText(text, centerX, centerY);
+            
+            // Layer 10: 3px blur with darker color
+            ctx.shadowColor = neonColors.darker;
+            ctx.shadowBlur = 3;
+            ctx.globalAlpha = 1;
+            ctx.fillText(text, centerX, centerY);
+            
+            // Layer 11: Drop shadow (1px offset)
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
+            ctx.shadowBlur = 1;
+            ctx.shadowOffsetX = 1;
+            ctx.shadowOffsetY = 1;
+            ctx.fillText(text, centerX, centerY);
+            
+            // Layer 12: Core text (no shadow)
             ctx.shadowBlur = 0;
+            ctx.shadowOffsetX = 0;
+            ctx.shadowOffsetY = 0;
+            ctx.fillStyle = neonColors.primary;
+            ctx.globalAlpha = 1;
+            ctx.fillText(text, centerX, centerY);
+            
+            // Layer 13: Bright center
             ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
-            ctx.fillText(text, canvas.width / 2, canvas.height * 0.4);
+            ctx.fillText(text, centerX, centerY);
+            
+            // Reset alpha for other elements
+            ctx.globalAlpha = 1;
+            
+            // Hide CSS neon text since we're using canvas
+            document.getElementById('neonText').style.display = 'none';
         } else {
+            // Hide neon text for material signs
+            document.getElementById('neonText').style.display = 'none';
+            
             const materialImg = new Image();
             materialImg.src = `assets/materials/${selectedMaterial}.jpg`;
             materialImg.onload = function () {
@@ -677,4 +827,89 @@ function downloadCanvasImage(format = 'png') {
     link.download = `alfarhan-logo.${fileExt}`;
     link.href = canvas.toDataURL(mimeType, 1.0);
     link.click();
+}
+
+function updateNeonText(text, font, fontSize, color) {
+    const neonTextElement = document.getElementById('neonText');
+    
+    // Update text content
+    neonTextElement.textContent = text;
+    
+    // Update font
+    neonTextElement.style.fontFamily = `'${font}', Arial, sans-serif`;
+    neonTextElement.style.fontSize = `${fontSize}px`;
+    
+    // Generate dynamic text-shadow based on color
+    let primaryColor = color;
+    let darkerColor = color;
+    
+    // Convert color names to hex for shadow generation
+    const colorMap = {
+        'red': '#ff0000',
+        'blue': '#0000ff',
+        'green': '#00ff00',
+        'yellow': '#ffff00',
+        'purple': '#800080',
+        'pink': '#ff69b4',
+        'orange': '#ff981a',
+        'white': '#ffffff',
+        'cyan': '#00ffff'
+    };
+    
+    if (colorMap[color]) {
+        primaryColor = colorMap[color];
+        darkerColor = darkenColor(primaryColor, 0.3);
+    }
+    
+    // Create layered text-shadow effect
+    const textShadow = `
+        ${darkerColor} 0px 0px 3px,
+        rgba(0, 0, 0, 0.3) 1px 1px 1px,
+        ${primaryColor} 0px 0px 6px,
+        ${primaryColor} 0px 0px 10px,
+        ${primaryColor} 0px 0px 13px,
+        ${primaryColor} 0px 0px 16px,
+        ${primaryColor} 0px 0px 20px,
+        ${primaryColor} 0px 0px 24px,
+        ${primaryColor} 0px 0px 28px,
+        ${primaryColor} 0px 0px 32px,
+        ${primaryColor} 0px 0px 40px
+    `;
+    
+    neonTextElement.style.textShadow = textShadow;
+    neonTextElement.style.color = primaryColor;
+    neonTextElement.style.display = 'block';
+}
+
+function getNeonColorMapping(color) {
+    // Color mappings based on your example: darker color for 3px shadow, brighter for main glow
+    const colorMappings = {
+        'orange': { primary: '#ff981a', darker: '#c16a01' },
+        'red': { primary: '#ff0040', darker: '#cc0033' },
+        'blue': { primary: '#0080ff', darker: '#0066cc' },
+        'green': { primary: '#00ff40', darker: '#00cc33' },
+        'yellow': { primary: '#ffff00', darker: '#cccc00' },
+        'purple': { primary: '#8040ff', darker: '#6633cc' },
+        'pink': { primary: '#ff40a0', darker: '#cc3380' },
+        'white': { primary: '#ffffff', darker: '#cccccc' },
+        'cyan': { primary: '#00ffff', darker: '#00cccc' }
+    };
+    
+    // Return mapping or default to orange if color not found
+    return colorMappings[color] || colorMappings['orange'];
+}
+
+function darkenColor(hex, factor) {
+    // Convert hex to rgb
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    
+    // Darken by factor
+    const newR = Math.floor(r * (1 - factor));
+    const newG = Math.floor(g * (1 - factor));
+    const newB = Math.floor(b * (1 - factor));
+    
+    // Convert back to hex
+    return `#${newR.toString(16).padStart(2, '0')}${newG.toString(16).padStart(2, '0')}${newB.toString(16).padStart(2, '0')}`;
 }

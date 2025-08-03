@@ -332,6 +332,35 @@
             border-radius: 8px;
             overflow: hidden;
             clip-path: inset(5% 5% 5% 5%);
+            position: relative;
+        }
+
+        .neon-text {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: bold;
+            text-align: center;
+            white-space: nowrap;
+            user-select: none;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .neon-effect {
+            text-shadow: 
+                #c16a01 0px 0px 3px,
+                rgba(0, 0, 0, 0.3) 1px 1px 1px,
+                #ff981a 0px 0px 6px,
+                #ff981a 0px 0px 10px,
+                #ff981a 0px 0px 13px,
+                #ff981a 0px 0px 16px,
+                #ff981a 0px 0px 20px,
+                #ff981a 0px 0px 24px,
+                #ff981a 0px 0px 28px,
+                #ff981a 0px 0px 32px,
+                #ff981a 0px 0px 40px;
         }
 
         @media (max-width: 768px) {
