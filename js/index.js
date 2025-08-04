@@ -427,7 +427,7 @@ function drawMaterialText(ctx, text, font, fontSize, canvasWidth, yPos, material
 
 // --- Dimension Line Drawing ---
 function drawDimensionLine(ctx, x1, y1, x2, y2, text, fontSize) {
-    const dimensionFontSize = Math.max(12, Math.min(18, fontSize * 0.2));
+    const dimensionFontSize = Math.max(12, Math.min(16, fontSize * 0.2));
     ctx.font = `bold ${dimensionFontSize}px Poppins`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'bottom';
@@ -456,7 +456,7 @@ function drawDimensionLine(ctx, x1, y1, x2, y2, text, fontSize) {
 }
 
 function drawDimensionLineVertical(ctx, x1, y1, x2, y2, text, fontSize) {
-    const dimensionFontSize = Math.max(12, Math.min(18, fontSize * 0.2));
+    const dimensionFontSize = Math.max(12, Math.min(16, fontSize * 0.2));
     ctx.font = `bold ${dimensionFontSize}px Poppins`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
