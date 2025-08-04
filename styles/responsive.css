@@ -14,12 +14,11 @@
     .creator-container {
         padding: 30px;
         gap: 30px;
-        margin: 0 20px;
     }
 
     .controls {
         min-width: 300px;
-        max-width: 400px;
+        max-width: 95%;
     }
 }
 
@@ -70,7 +69,7 @@
     }
 
     .controls {
-        width: 100%;
+        width: 95%;
         padding: 15px;
         max-height: none;
         overflow-y: visible;
@@ -80,7 +79,6 @@
     .preview {
         min-height: 280px;
         order: 1;
-        padding: 15px;
     }
 
     .material-thumbnails {
@@ -121,10 +119,10 @@
     }
 
     .color-box {
-        width: 36px;
-        height: 36px;
+        width: 43px;
+        height: 20px;
         min-width: 36px;
-        min-height: 36px;
+        min-height: 20px;
     }
 
     .bg-thumb {
@@ -160,18 +158,19 @@
         gap: 20px;
         padding: 20px;
         flex-direction: column;
+        height: auto;
     }
 
     .controls {
-        width: 100%;
+        width: 95%;
         order: 2;
-        max-width: 600px;
         margin: 0 auto;
+        height: auto;
     }
 
     .preview {
         order: 1;
-        min-height: 350px;
+        height: auto;
         width: 100%;
     }
 
@@ -180,8 +179,8 @@
     }
 
     .color-box {
-        width: 40px;
-        height: 40px;
+        width: 43px;
+        height: 20px;
     }
 
     .bg-thumb {

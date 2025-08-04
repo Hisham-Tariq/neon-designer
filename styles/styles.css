@@ -21,8 +21,12 @@
             --input-bg: #404040;
             --input-border: #ff6200;
         }
+        html{
+            margin: 0;
+          }
 
         body {
+            height: 100%;
             font-family: 'Poppins', sans-serif;
             background-color: var(--bg-primary);
             color: var(--text-primary);
@@ -199,13 +203,15 @@
         .creator-container {
             display: flex;
             flex-direction: row;
+            height: 100vh; /* Full viewport height */
             padding: 30px;
+            margin: 0;
             gap: 30px;
             background-color: var(--bg-primary);
             transition: background-color 0.3s ease;
-            align-items: flex-start;
-            /* Align items to the top */
-        }
+            align-items: stretch; /* key: stretch children to same height */
+            box-sizing: border-box;
+          }
 
         @media (max-width: 768px) {
             .creator-container {
@@ -217,17 +223,15 @@
 
         .controls {
             background-color: var(--card-bg);
-            padding: 25px;
-            border-radius: 12px;
+            padding: 20px;
             width: 400px;
+            border-radius: 12px;
             box-shadow: 0 0 20px var(--shadow-color);
             transition: background-color 0.3s ease, box-shadow 0.3s ease;
-            overflow-y: auto;
-            max-height: calc(100vh - 120px);
-            /* Adjust max-height based on viewport */
-            flex-shrink: 0;
-            /* Prevent controls from shrinking */
-        }
+            flex-shrink: 0;         /* Prevent shrinking */
+            height: 100%;           /* Match parent container height */
+            overflow-y: auto;       /* Scroll inside this box */
+          }
 
         /* <----------------3d texture style start--------------------> */
         /* Add to your styles.css */
@@ -288,34 +292,30 @@
 
         @media (max-width: 768px) {
             .controls {
-                width: 93%;
-                padding: 20px 15px;
+                width: 100%;
                 order: 2;
             }
         }
 
         .preview {
-            flex-grow: 1;
+            height: 100%;
+            overflow-y: auto; /* optional: scroll if content overflows */
+            position: relative;
+            flex: 2; /* or whatever ratio you want */
+            overflow: hidden;  /* optional, prevents extra scroll */
             background-color: var(--card-bg);
             border-radius: 12px;
-            padding: 25px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 75vh;
-            /* Set a relative height */
-            min-height: 450px;
-            /* Minimum height for the preview */
             box-shadow: inset 0 0 20px var(--shadow-color);
-            position: relative;
             transition: background-color 0.3s ease, box-shadow 0.3s ease;
-        }
+          }
 
         @media (max-width: 768px) {
             .preview {
                 min-height: 300px;
-                padding: 15px;
                 order: 1;
             }
         }
@@ -323,7 +323,7 @@
         .preview-canvas {
             width: 100%;
             height: 100%;
-            background-size: 120%;
+            background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             max-width: 100%;
@@ -331,7 +331,6 @@
             object-fit: contain;
             border-radius: 8px;
             overflow: hidden;
-            clip-path: inset(5% 5% 5% 5%);
             position: relative;
         }
 
@@ -681,9 +680,9 @@
         }
 
         .color-box {
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
+            width: 43px;
+            height: 12px;
+            border-radius: 100%;
             cursor: pointer;
             border: 3px solid wheat;
             transition: all 0.7s;
@@ -822,7 +821,8 @@
             padding: 10px;
             border-radius: 10px;
             transition: background-color 0.3s ease;
-        }
+            z-index: 1; /* Optional: ensure it appears above other elements */
+          }
 
         @media (max-width: 768px) {
             .background-selector {
@@ -1185,16 +1185,19 @@
             }
 
             .creator-container {
-                padding: 15px;
-            }
+                flex-direction: column;
+                height: auto; /* prevent 100vh on small screens */
+                gap: 20px;
+                padding: 20px 15px;
+              }
 
             .controls {
                 padding: 20px;
             }
 
-            .preview {
-                padding: 20px;
-                min-height: 35vh;
+            .preview,
+            .creator-sidebar {
+                height: auto; /* Let content dictate height */
             }
 
             .price-display {
